@@ -1,0 +1,326 @@
+/* Base Reset & Variables */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+    --bg-color: #121212;
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+    --border-default: #333333;
+    --input-bg: #222222;
+    --input-bg-focus: #2a2a2a;
+    --accent-blue: #3b82f6;
+    --accent-blue-hover: #2563eb;
+    
+    /* Dynamic Border Colors */
+    --status-color: #333333; 
+    --color-safe: #2ecc71;    /* Green */
+    --color-warning: #f1c40f; /* Yellow */
+    --color-danger: #e74c3c;  /* Red */
+}
+
+/* Fixed Viewport Constraints */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px 14px 16px;
+    overflow: hidden;
+    border: 5px solid var(--status-color);
+    transition: border-color 0.5s ease;
+}
+
+/* Top Meeting URL Bar */
+.url-bar-container {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.url-input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-default);
+    border-radius: 6px;
+    padding: 2px 4px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.url-input-wrapper:focus-within {
+    border-color: var(--accent-blue);
+    background-color: var(--input-bg-focus);
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.15s, background-color 0.15s;
+    flex-shrink: 0;
+}
+
+.icon-btn:hover {
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.icon-btn.launch-btn:hover {
+    color: #60a5fa;
+}
+
+.url-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    padding: 5px 8px;
+    outline: none;
+    min-width: 0;
+}
+
+.url-input::placeholder {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Auto-Redirect Toggle & Status Pill */
+.url-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.toggle-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border-default);
+    border-radius: 3px;
+    background-color: var(--input-bg);
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    display: grid;
+    place-content: center;
+    transition: all 0.15s ease;
+}
+
+.toggle-label input[type="checkbox"]:checked {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.toggle-label input[type="checkbox"]:checked::after {
+    content: "✓";
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.redirect-status-badge {
+    font-size: 0.7rem;
+    letter-spacing: 0.2px;
+    transition: color 0.2s;
+}
+
+.redirect-status-badge.active {
+    color: var(--color-safe);
+}
+
+.redirect-status-badge.opened {
+    color: #93c5fd;
+}
+
+.redirect-status-badge.waiting {
+    color: #fbbf24;
+}
+
+/* Center Wrapper to Keep Widget Centered Vertically */
+.widget-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Center-Aligned Horizontal Widget Layout */
+.widget-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 12px;
+}
+
+/* Displays countdown digits: H:MM:SS */
+.time-digits {
+    font-size: 1.7rem;
+    font-weight: 700;
+    font-family: monospace;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    white-space: nowrap;
+}
+
+/* Target Group (until [HH:MM]) */
+.target-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.target-group > span {
+    margin: 0 2px;
+}
+
+.time-input-group {
+    display: flex;
+    align-items: center;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    padding: 4px 6px;
+}
+
+.time-field {
+    width: 24px;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    outline: none;
+    font-family: monospace;
+    font-weight: 600;
+}
+
+#inputHour {
+    text-align: right;
+}
+
+#inputMinute {
+    text-align: left;
+}
+
+.time-field::-webkit-inner-spin-button, 
+.time-field::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.time-separator {
+    color: var(--text-muted);
+    font-weight: bold;
+    user-select: none;
+    padding: 0 1px;
+}
+
+/* Bottom Settings Bar for Thresholds */
+.settings-bar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 440px;
+    gap: 8px;
+}
+
+.threshold-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+.threshold-field {
+    width: 28px;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    outline: none;
+    font-family: monospace;
+    font-weight: 600;
+}
+
+.bell-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.bell-container svg {
+    rotate: 25deg;
+}
+
+#threshold1Field { text-align: center; color: var(--color-safe); }
+#threshold2Field { text-align: center; color: var(--color-warning); }
+#threshold3Field { text-align: center; color: var(--color-danger); }
+
+/* Responsive scaling */
+@media (max-width: 420px) {
+    .widget-layout {
+        gap: 8px;
+    }
+    .time-digits {
+        font-size: 1.35rem;
+    }
+    .target-group {
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+    .time-field {
+        font-size: 0.85rem;
+        width: 20px;
+    }
+    .settings-bar {
+        max-width: 100%;
+    }
+}
+
+.current-clock {
+   font-family: monospace;
+   font-weight: 700;
+   color: var(--text-main);
+   font-size: 0.72rem;
+   letter-spacing: 0.5px;
+   text-align: center;
+   opacity: 0.9;
+}

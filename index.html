@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Widget</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top URL Meeting Redirect Bar -->
+    <div class="url-bar-container">
+        <div class="current-clock" id="currentClock">--:--:--</div>
+        <div class="url-input-wrapper">
+            <!-- Clear Button (✕) -->
+            <button type="button" class="icon-btn" id="clearUrlBtn" title="Clear URL and disable redirect" aria-label="Clear URL">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+
+            <!-- URL input field -->
+            <input 
+                type="text" 
+                id="meetingUrlInput" 
+                class="url-input" 
+                placeholder="Meeting URL (Teams, Zoom, Meet...)" 
+                spellcheck="false" 
+                autocomplete="off"
+            >
+
+            <!-- Launch Button (➜) -->
+            <button type="button" class="icon-btn launch-btn" id="launchUrlBtn" title="Open meeting link now in a new tab" aria-label="Launch meeting URL">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                    <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="url-controls-row">
+            <label class="toggle-label" title="Automatically opens the link when the countdown reaches 00:00:00">
+                <input type="checkbox" id="autoRedirectCheck" checked>
+                <span>Auto-open at 0:00</span>
+            </label>
+            <span class="redirect-status-badge" id="redirectStatus">Ready</span>
+        </div>
+    </div>
+
+    <!-- Center Countdown Area -->
+    <div class="widget-wrapper">
+        <div class="widget-layout">
+            <!-- Displayed live remaining time -->
+            <div class="time-digits" id="timeDigits">--:--:--</div>
+
+            <!-- Target sentence layout -->
+            <div class="target-group">
+                <span>until</span>
+                <form id="timerForm" style="display:inline;" onsubmit="return false;">
+                    <div class="time-input-group">
+                        <input type="text" id="inputHour" class="time-field" placeholder="HH" maxlength="2" inputmode="numeric" autocomplete="off">
+                        <span class="time-separator">:</span>
+                        <input type="text" id="inputMinute" class="time-field" placeholder="MM" maxlength="2" inputmode="numeric" autocomplete="off">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Settings Bar for Thresholds & Beeps -->
+    <div class="settings-bar">
+        <!-- Threshold 1: Green / Safe -->
+        <div class="threshold-group">
+            <div class="bell-container" style="color: var(--color-safe);">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2a2 2 0 0 0-2 2v.09A7.002 7.002 0 0 0 4 11v5l-2 2v1h20v-1l-2-2v-5a7.002 7.002 0 0 0-6-6.91V4a2 2 0 0 0-2-2zm0 18a3 3 0 0 1-3-3h6a3 3 0 0 1-3 3z"/></svg>
+            </div>
+            <input type="text" id="threshold1Field" class="threshold-field" placeholder="30" maxlength="3" inputmode="numeric" autocomplete="off">
+        </div>
+
+        <!-- Threshold 2: Yellow / Warning -->
+        <div class="threshold-group">
+            <div class="bell-container" style="color: var(--color-warning);">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2a2 2 0 0 0-2 2v.09A7.002 7.002 0 0 0 4 11v5l-2 2v1h20v-1l-2-2v-5a7.002 7.002 0 0 0-6-6.91V4a2 2 0 0 0-2-2zm0 18a3 3 0 0 1-3-3h6a3 3 0 0 1-3 3z"/></svg>
+            </div>
+            <input type="text" id="threshold2Field" class="threshold-field" placeholder="15" maxlength="3" inputmode="numeric" autocomplete="off">
+        </div>
+
+        <!-- Threshold 3: Red / Danger -->
+        <div class="threshold-group">
+            <div class="bell-container" style="color: var(--color-danger);">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2a2 2 0 0 0-2 2v.09A7.002 7.002 0 0 0 4 11v5l-2 2v1h20v-1l-2-2v-5a7.002 7.002 0 0 0-6-6.91V4a2 2 0 0 0-2-2zm0 18a3 3 0 0 1-3-3h6a3 3 0 0 1-3 3z"/></svg>
+            </div>
+            <input type="text" id="threshold3Field" class="threshold-field" placeholder="5" maxlength="3" inputmode="numeric" autocomplete="off">
+        </div>
+    </div>
+
+    <!-- Audio Elements for Local Beep Files -->
+    <audio id="beep0" src="beep0.mp3" preload="auto"></audio>
+    <audio id="beep1" src="beep1.mp3" preload="auto"></audio>
+    <audio id="beep2" src="beep2.mp3" preload="auto"></audio>
+    <audio id="beep3" src="beep3.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
